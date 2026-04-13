@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle de Gastos</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="topbar">
+        <div class="topbar-content centered-header">
+          <div class="title-wrapper">
+            <h1>Controle de Gastos</h1>
+            <p>Organize salário, cartão, gastos diversos e lembretes</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="left-panel">
+          <div class="card summary-card">
+            <div class="card-header">
+              <h2>Resumo do mês</h2>
+            </div>
+
+            <div class="summary-grid">
+              <div class="summary-box salary-box">
+                <span class="label">Salário do mês</span>
+                <div class="salary-edit-row">
+                  <span class="currency">R$</span>
+                  <input
+                    type="number"
+                    id="salaryInput"
+                    class="salary-input"
+                    min="0"
+                    step="0.01"
+                    placeholder="0,00"
+                  />
+                </div>
+              </div>
+
+              <div class="summary-box card-total-box">
+                <span class="label">Cartão deste mês</span>
+                <strong id="cardMonthTotal">R$ 0,00</strong>
+              </div>
+
+              <div class="summary-box extra-total-box">
+                <span class="label">Gastos diversos</span>
+                <strong id="extraTotal">R$ 0,00</strong>
+              </div>
+
+              <div class="summary-box result-box">
+                <span class="label">Saldo restante</span>
+                <strong id="remainingValue">R$ 0,00</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="bottom-panels">
+            <div class="card section-card compact-card">
+              <div class="section-top">
+                <div>
+                  <h2>Cartão</h2>
+                  <p class="section-subtitle">Itens parcelados no cartão</p>
+                </div>
+                <button id="addCardExpenseBtn" class="primary-btn">
+                  + Adicionar
+                </button>
+              </div>
+
+              <div class="table-header card-table">
+                <span>Título</span>
+                <span>Valor</span>
+                <span>Parcelas Pagas</span>
+                <span>Parcelas totais</span>
+                <span></span>
+              </div>
+
+              <div id="cardExpensesList" class="list-area"></div>
+            </div>
+
+            <div class="card section-card compact-card">
+              <div class="section-top">
+                <div>
+                  <h2>Gastos diversos</h2>
+                  <p class="section-subtitle">Gastos fora do cartão</p>
+                </div>
+                <button id="addExtraExpenseBtn" class="secondary-btn">
+                  + Adicionar
+                </button>
+              </div>
+
+              <div class="table-header extra-table">
+                <span>Título</span>
+                <span>Valor</span>
+                <span>Ação</span>
+              </div>
+
+              <div id="extraExpensesList" class="list-area"></div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="right-panel">
+          <div class="card notes-card full-height-card">
+            <div class="section-top">
+              <div>
+                <h2>Lembretes</h2>
+                <p class="section-subtitle">
+                  Clique e escreva direto nos post-its
+                </p>
+              </div>
+              <button id="addNoteBtn" class="primary-btn">+ Novo</button>
+            </div>
+
+            <div id="notesList" class="notes-grid"></div>
+          </div>
+        </aside>
+      </main>
+      <div class="footer-credit">Sistema feito por: Bruno Trevizani ®</div>
+    </div>
+
+    <script src="./js/storage.js"></script>
+    <script src="./js/ui.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
