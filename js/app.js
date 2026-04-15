@@ -1,4 +1,5 @@
 let appData = loadData();
+let calculatorExpression = "";
 
 function generateId() {
   return Date.now().toString() + Math.floor(Math.random() * 1000).toString();
@@ -20,7 +21,7 @@ function addCardExpense() {
     name: "Novo item",
     installmentValue: 0,
     totalInstallments: 1,
-    paidInstallments: 0,
+    paidInstallments: 0
   });
 
   updateAndSave();
@@ -63,7 +64,7 @@ function addExtraExpense() {
   appData.extraExpenses.push({
     id: generateId(),
     name: "Novo gasto",
-    value: 0,
+    value: 0
   });
 
   updateAndSave();
@@ -86,9 +87,7 @@ function updateExtraExpenseField(id, field, value) {
 }
 
 function deleteExtraExpense(id) {
-  appData.extraExpenses = appData.extraExpenses.filter(
-    (item) => item.id !== id,
-  );
+  appData.extraExpenses = appData.extraExpenses.filter((item) => item.id !== id);
   updateAndSave();
 }
 
@@ -101,7 +100,7 @@ function addNote() {
   appData.notes.push({
     id: generateId(),
     text: "",
-    color: getNextNoteColor(),
+    color: getNextNoteColor()
   });
 
   updateAndSave();
@@ -118,6 +117,94 @@ function updateNote(id, text) {
 function deleteNote(id) {
   appData.notes = appData.notes.filter((item) => item.id !== id);
   updateAndSave();
+}
+
+function appendToCalculator(value) {
+  const lastChar = calculatorExpression.slice(-1);
+  const operators = ["+", "-", "*", "/"];
+
+  if (operators.includes(value)) {
+    if (!calculatorExpression.length) return;
+    if (operators.includes(lastChar)) {
+      calculatorExpression = calculatorExpression.slice(0, -1) + value;
+      renderCalculatorDisplay(calculatorExpression);
+      return;
+    }
+  }
+
+  if (value === ".") {
+    const parts = calculatorExpression.split(/[\+\-\*\/]/);
+    const currentPart = parts[parts.length - 1];
+    if (currentPart.includes(".")) return;
+  }
+
+  calculatorExpression += value;
+  renderCalculatorDisplay(calculatorExpression);
+}
+
+function clearCalculator() {
+  calculatorExpression = "";
+  renderCalculatorDisplay(calculatorExpression);
+}
+
+function backspaceCalculator() {
+  calculatorExpression = calculatorExpression.slice(0, -1);
+  renderCalculatorDisplay(calculatorExpression);
+}
+
+function calculateResult() {
+  if (!calculatorExpression.trim()) return;
+
+  try {
+    const sanitized = calculatorExpression.replace(/[^0-9+\-*/.]/g, "");
+    if (!sanitized) return;
+
+    const result = Function(`"use strict"; return (${sanitized})`)();
+
+    if (!Number.isFinite(result)) {
+      calculatorExpression = "";
+      renderCalculatorDisplay("Erro");
+      return;
+    }
+
+    calculatorExpression = String(result);
+    renderCalculatorDisplay(calculatorExpression);
+  } catch (error) {
+    calculatorExpression = "";
+    renderCalculatorDisplay("Erro");
+  }
+}
+
+function setupCalculatorEvents() {
+  const calculatorCard = document.querySelector(".calculator-grid");
+  if (!calculatorCard) return;
+
+  calculatorCard.addEventListener("click", (event) => {
+    const button = event.target.closest(".calc-btn");
+    if (!button) return;
+
+    const action = button.dataset.calcAction;
+    const value = button.dataset.calcValue;
+
+    if (action === "clear") {
+      clearCalculator();
+      return;
+    }
+
+    if (action === "backspace") {
+      backspaceCalculator();
+      return;
+    }
+
+    if (action === "equals") {
+      calculateResult();
+      return;
+    }
+
+    if (value !== undefined) {
+      appendToCalculator(value);
+    }
+  });
 }
 
 function setupStaticEvents() {
@@ -159,12 +246,12 @@ function setupStaticEvents() {
       updateCardExpenseField(id, "installmentValue", target.value);
     }
 
-    if (target.classList.contains("card-total-installments")) {
-      updateCardExpenseField(id, "totalInstallments", target.value);
-    }
-
     if (target.classList.contains("card-paid-installments")) {
       updateCardExpenseField(id, "paidInstallments", target.value);
+    }
+
+    if (target.classList.contains("card-total-installments")) {
+      updateCardExpenseField(id, "totalInstallments", target.value);
     }
   });
 
@@ -212,9 +299,12 @@ function setupStaticEvents() {
 
     deleteNote(button.dataset.id);
   });
+
+  setupCalculatorEvents();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   renderAll(appData);
+  renderCalculatorDisplay(calculatorExpression);
   setupStaticEvents();
 });

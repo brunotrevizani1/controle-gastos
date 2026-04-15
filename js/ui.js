@@ -1,7 +1,7 @@
 function formatCurrency(value) {
   return Number(value || 0).toLocaleString("pt-BR", {
     style: "currency",
-    currency: "BRL",
+    currency: "BRL"
   });
 }
 
@@ -35,10 +35,8 @@ function renderTotals(data) {
   const extraTotal = calculateExtraTotal(data);
   const remaining = Number(data.salary || 0) - cardMonthTotal - extraTotal;
 
-  document.getElementById("cardMonthTotal").textContent =
-    formatCurrency(cardMonthTotal);
-  document.getElementById("extraTotal").textContent =
-    formatCurrency(extraTotal);
+  document.getElementById("cardMonthTotal").textContent = formatCurrency(cardMonthTotal);
+  document.getElementById("extraTotal").textContent = formatCurrency(extraTotal);
 
   const remainingElement = document.getElementById("remainingValue");
   remainingElement.textContent = formatCurrency(remaining);
@@ -61,46 +59,46 @@ function renderCardExpenses(data) {
 
     row.innerHTML = `
       <input
-  type="text"
-  class="input-field card-name"
-  data-id="${item.id}"
-  value="${item.name}"
-  placeholder="Nome"
-/>
+        type="text"
+        class="input-field card-name"
+        data-id="${item.id}"
+        value="${item.name}"
+        placeholder="Nome"
+      />
 
-<input
-  type="number"
-  class="input-field card-installment-value"
-  data-id="${item.id}"
-  value="${Number(item.installmentValue || 0)}"
-  min="0"
-  step="0.01"
-  placeholder="Parcela"
-/>
+      <input
+        type="number"
+        class="input-field card-installment-value"
+        data-id="${item.id}"
+        value="${Number(item.installmentValue || 0)}"
+        min="0"
+        step="0.01"
+        placeholder="Parcela"
+      />
 
-<input
-  type="number"
-  class="input-field card-paid-installments"
-  data-id="${item.id}"
-  value="${Number(item.paidInstallments || 0)}"
-  min="0"
-  step="1"
-  placeholder="Pagas"
-/>
+      <input
+        type="number"
+        class="input-field card-paid-installments"
+        data-id="${item.id}"
+        value="${Number(item.paidInstallments || 0)}"
+        min="0"
+        step="1"
+        placeholder="Pagas"
+      />
 
-<input
-  type="number"
-  class="input-field card-total-installments"
-  data-id="${item.id}"
-  value="${Number(item.totalInstallments || 0)}"
-  min="1"
-  step="1"
-  placeholder="Total"
-/>
+      <input
+        type="number"
+        class="input-field card-total-installments"
+        data-id="${item.id}"
+        value="${Number(item.totalInstallments || 0)}"
+        min="1"
+        step="1"
+        placeholder="Total"
+      />
 
-<button class="delete-btn delete-card-expense-btn" data-id="${item.id}">
-  🗑️
-</button>
+      <button class="delete-btn delete-card-expense-btn" data-id="${item.id}" title="Excluir">
+        🗑️
+      </button>
     `;
 
     list.appendChild(row);
@@ -139,7 +137,7 @@ function renderExtraExpenses(data) {
         placeholder="Valor"
       />
 
-      <button class="delete-btn delete-extra-expense-btn" data-id="${item.id}">
+      <button class="delete-btn delete-extra-expense-btn" data-id="${item.id}" title="Excluir">
         🗑️
       </button>
     `;
@@ -177,6 +175,13 @@ function renderNotes(data) {
 
     notesList.appendChild(card);
   });
+}
+
+function renderCalculatorDisplay(value) {
+  const display = document.getElementById("calculatorDisplay");
+  if (!display) return;
+
+  display.textContent = value && value.length ? value : "0";
 }
 
 function renderAll(data) {

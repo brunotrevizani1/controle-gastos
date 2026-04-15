@@ -9,23 +9,23 @@ function getDefaultData() {
         name: "Celular",
         installmentValue: 100,
         totalInstallments: 10,
-        paidInstallments: 3,
-      },
+        paidInstallments: 3
+      }
     ],
     extraExpenses: [
       {
         id: generateId(),
         name: "Academia",
-        value: 90,
-      },
+        value: 90
+      }
     ],
     notes: [
       {
         id: generateId(),
         text: "Verificar a próxima fatura.",
-        color: "yellow",
-      },
-    ],
+        color: "yellow"
+      }
+    ]
   };
 }
 
