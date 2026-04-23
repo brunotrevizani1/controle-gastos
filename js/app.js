@@ -19,6 +19,7 @@ function addCardExpense() {
   appData.cardExpenses.push({
     id: generateId(),
     name: "Novo item",
+    totalProductValue: 0,
     installmentValue: 0,
     totalInstallments: 1,
     paidInstallments: 0
@@ -33,6 +34,10 @@ function updateCardExpenseField(id, field, value) {
 
   if (field === "name") {
     item.name = value;
+  }
+
+  if (field === "totalProductValue") {
+    item.totalProductValue = Number(value) || 0;
   }
 
   if (field === "installmentValue") {
@@ -242,16 +247,20 @@ function setupStaticEvents() {
       updateCardExpenseField(id, "name", target.value);
     }
 
+    if (target.classList.contains("card-total-product-value")) {
+      updateCardExpenseField(id, "totalProductValue", target.value);
+    }
+
     if (target.classList.contains("card-installment-value")) {
       updateCardExpenseField(id, "installmentValue", target.value);
     }
 
-    if (target.classList.contains("card-paid-installments")) {
-      updateCardExpenseField(id, "paidInstallments", target.value);
-    }
-
     if (target.classList.contains("card-total-installments")) {
       updateCardExpenseField(id, "totalInstallments", target.value);
+    }
+
+    if (target.classList.contains("card-paid-installments")) {
+      updateCardExpenseField(id, "paidInstallments", target.value);
     }
   });
 

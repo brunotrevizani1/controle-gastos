@@ -11,7 +11,10 @@
     <header class="topbar">
       <div class="topbar-content centered-header">
         <div class="title-wrapper">
-          <h1>Controle de Gastos</h1>
+          <h1 class="title-with-icon">
+            <i data-lucide="wallet"></i>
+            Controle de Gastos
+          </h1>
           <p>Organize salário, cartão, gastos diários e lembretes!</p>
         </div>
       </div>
@@ -62,16 +65,20 @@
             <div class="section-top">
               <div>
                 <h2>Cartão</h2>
-                <p class="section-subtitle">Itens parcelados da fatura</p>
+                <p class="section-subtitle">Itens parcelados no cartão</p>
               </div>
-              <button id="addCardExpenseBtn" class="primary-btn">+ Adicionar</button>
+              <button id="addCardExpenseBtn" class="primary-btn">
+                <i data-lucide="plus"></i>
+                <span>Adicionar</span>
+              </button>
             </div>
 
             <div class="table-header card-table">
               <span>Título</span>
-              <span>Parcela</span>
+              <span>Valor total</span>
+              <span>Valor parcela</span>
+              <span>Parcelas</span>
               <span>Pagas</span>
-              <span>Total</span>
               <span></span>
             </div>
 
@@ -82,9 +89,12 @@
             <div class="section-top">
               <div>
                 <h2>Gastos diários</h2>
-                <p class="section-subtitle">Gastos fora do cartão</p>
+                <p class="section-subtitle">Gastos parcelados em 1x</p>
               </div>
-              <button id="addExtraExpenseBtn" class="secondary-btn">+ Adicionar</button>
+              <button id="addExtraExpenseBtn" class="secondary-btn">
+                <i data-lucide="plus"></i>
+                <span>Adicionar</span>
+              </button>
             </div>
 
             <div class="table-header extra-table">
@@ -105,7 +115,10 @@
               <div>
                 <h2>Lembretes</h2>
               </div>
-              <button id="addNoteBtn" class="primary-btn">+ Novo</button>
+              <button id="addNoteBtn" class="primary-btn">
+                <i data-lucide="plus"></i>
+                <span>Novo</span>
+              </button>
             </div>
 
             <div id="notesList" class="notes-grid"></div>
@@ -157,5 +170,11 @@
   <script src="./js/storage.js"></script>
   <script src="./js/ui.js"></script>
   <script src="./js/app.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  </script>
 </body>
 </html>

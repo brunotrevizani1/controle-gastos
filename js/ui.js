@@ -68,12 +68,32 @@ function renderCardExpenses(data) {
 
       <input
         type="number"
+        class="input-field card-total-product-value"
+        data-id="${item.id}"
+        value="${Number(item.totalProductValue || 0)}"
+        min="0"
+        step="0.01"
+        placeholder="Valor total"
+      />
+
+      <input
+        type="number"
         class="input-field card-installment-value"
         data-id="${item.id}"
         value="${Number(item.installmentValue || 0)}"
         min="0"
         step="0.01"
-        placeholder="Parcela"
+        placeholder="Valor da parcela"
+      />
+
+      <input
+        type="number"
+        class="input-field card-total-installments"
+        data-id="${item.id}"
+        value="${Number(item.totalInstallments || 0)}"
+        min="1"
+        step="1"
+        placeholder="Totais"
       />
 
       <input
@@ -86,18 +106,8 @@ function renderCardExpenses(data) {
         placeholder="Pagas"
       />
 
-      <input
-        type="number"
-        class="input-field card-total-installments"
-        data-id="${item.id}"
-        value="${Number(item.totalInstallments || 0)}"
-        min="1"
-        step="1"
-        placeholder="Total"
-      />
-
       <button class="delete-btn delete-card-expense-btn" data-id="${item.id}" title="Excluir">
-        🗑️
+        <i data-lucide="trash-2"></i>
       </button>
     `;
 
@@ -138,7 +148,7 @@ function renderExtraExpenses(data) {
       />
 
       <button class="delete-btn delete-extra-expense-btn" data-id="${item.id}" title="Excluir">
-        🗑️
+        <i data-lucide="trash-2"></i>
       </button>
     `;
 
@@ -168,7 +178,7 @@ function renderNotes(data) {
 
       <div class="note-actions">
         <button class="note-delete-btn" data-id="${note.id}" title="Excluir">
-          🗑️
+          <i data-lucide="trash-2"></i>
         </button>
       </div>
     `;
@@ -190,4 +200,8 @@ function renderAll(data) {
   renderCardExpenses(data);
   renderExtraExpenses(data);
   renderNotes(data);
+
+  if (window.lucide) {
+    lucide.createIcons();
+  }
 }
